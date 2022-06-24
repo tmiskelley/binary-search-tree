@@ -6,6 +6,7 @@ class Tree
   def initialize(arr)
     @data = arr.sort.uniq
     @root = build_tree(data)
+    p @root
   end
 
   def build_tree(array)
@@ -33,7 +34,5 @@ class Node
 
   def initialize(data)
     @data = data
-    @left_branch = nil
-    @right_branch = nil
   end
 end
