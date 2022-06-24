@@ -6,7 +6,6 @@ class Tree
   def initialize(arr)
     @data = arr.sort.uniq
     @root = build_tree(data)
-    p @root
   end
 
   def build_tree(array)
@@ -19,6 +18,25 @@ class Tree
     root_node.right = build_tree(array[(middle + 1)..-1])
 
     root_node
+  end
+
+  def insert(data)
+    new_node = Node.new(data)
+    current_node = @root
+
+    until current_node.left.nil? || current_node.right.nil?
+      if new_node.data > current_node.data
+        current_node = current_node.right
+      else
+        current_node = current_node.left
+      end
+    end
+
+    if new_node.data > current_node.data
+      current_node.right = new_node
+    else
+      current_node.left = new_node
+    end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
@@ -34,5 +52,7 @@ class Node
 
   def initialize(data)
     @data = data
+    @left = nil
+    @right = nil
   end
 end
