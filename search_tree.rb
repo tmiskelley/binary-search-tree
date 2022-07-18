@@ -39,6 +39,28 @@ class Tree
     end
   end
 
+  def delete(data)
+    current_node = @root
+    previous_node = nil
+
+    until current_node.data == data
+      if data > current_node.data
+        previous_node = current_node
+        current_node = current_node.right
+      else
+        previous_node = current_node
+        current_node = current_node.left
+      end
+    end
+
+    # deletes a leaf node from the tree
+    if previous_node.left == current_node
+      previous_node.left = nil
+    else
+      previous_node.right = nil
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
