@@ -20,6 +20,12 @@ class Tree
     root_node
   end
 
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
   def insert(data)
     new_node = Node.new(data)
     current_node = @root
@@ -53,7 +59,16 @@ class Tree
       end
     end
 
-    # deletes a leaf node from the tree
+    if current_node.right.nil? && current_node.left.nil?
+      remove_leaf_node(previous_node, current_node)
+    else
+      remove_one_child(current_node)
+    end
+  end
+
+  protected
+
+  def remove_leaf_node(previous_node, current_node)
     if previous_node.left == current_node
       previous_node.left = nil
     else
@@ -61,10 +76,15 @@ class Tree
     end
   end
 
-  def pretty_print(node = @root, prefix = '', is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
-    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  # deletes a node from Tree that has only one child node
+  def remove_one_child(current_node)
+    unless current_node.left == nil
+      current_node.data = current_node.left.data
+      current_node.left = nil
+    else
+      current_node.data = current_node.right.data
+      current_node.right = nil
+    end
   end
 end
 
