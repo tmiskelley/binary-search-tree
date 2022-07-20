@@ -61,8 +61,10 @@ class Tree
 
     if current_node.right.nil? && current_node.left.nil?
       remove_leaf_node(previous_node, current_node)
-    else
+    elsif current_node.right.nil? || current_node.left.nil?
       remove_one_child(current_node)
+    else
+      remove_two_child(current_node)
     end
   end
 
@@ -85,6 +87,17 @@ class Tree
       current_node.data = current_node.right.data
       current_node.right = nil
     end
+  end
+
+  # deletes a node from Tree that has two children
+  def remove_two_child(current_node)
+    original_node = current_node
+    current_node = current_node.right
+    current_node = current_node.left until current_node.left.nil?
+
+    new_node = current_node.data
+    delete(current_node.data)
+    original_node.data = new_node
   end
 end
 
