@@ -68,6 +68,19 @@ class Tree
     end
   end
 
+  def find(data)
+    current_node = @root
+
+    until current_node.data == data
+      if data > current_node.data
+        current_node = current_node.right
+      else
+        current_node = current_node.left
+      end
+    end
+    current_node
+  end
+
   protected
 
   def remove_leaf_node(previous_node, current_node)
