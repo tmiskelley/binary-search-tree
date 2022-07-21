@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# takes an array and converts it into a binary search tree data structure
 class Tree
   attr_accessor :root, :data
 
@@ -15,7 +16,7 @@ class Tree
     root_node = Node.new(array[middle])
 
     root_node.left = build_tree(array[0...middle])
-    root_node.right = build_tree(array[(middle + 1)..-1])
+    root_node.right = build_tree(array[(middle + 1)..])
 
     root_node
   end
@@ -31,11 +32,8 @@ class Tree
     current_node = @root
 
     until current_node.left.nil? || current_node.right.nil?
-      if new_node.data > current_node.data
-        current_node = current_node.right
-      else
-        current_node = current_node.left
-      end
+      current_node =
+        new_node.data > current_node.data ? current_node.right : current_node.left
     end
 
     if new_node.data > current_node.data
@@ -50,13 +48,9 @@ class Tree
     previous_node = nil
 
     until current_node.data == data
-      if data > current_node.data
-        previous_node = current_node
-        current_node = current_node.right
-      else
-        previous_node = current_node
-        current_node = current_node.left
-      end
+      previous_node = current_node
+      current_node =
+        data > current_node.data ? current_node.right : current_node.left
     end
 
     if current_node.right.nil? && current_node.left.nil?
@@ -93,12 +87,12 @@ class Tree
 
   # deletes a node from Tree that has only one child node
   def remove_one_child(current_node)
-    unless current_node.left == nil
-      current_node.data = current_node.left.data
-      current_node.left = nil
-    else
+    if current_node.left.nil?
       current_node.data = current_node.right.data
       current_node.right = nil
+    else
+      current_node.data = current_node.left.data
+      current_node.left = nil
     end
   end
 
@@ -124,3 +118,9 @@ class Node
     @right = nil
   end
 end
+
+my_bst = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9])
+my_bst.pretty_print
+my_bst.delete(7)
+my_bst.insert(0)
+my_bst.pretty_print
