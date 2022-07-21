@@ -118,9 +118,3 @@ class Node
     @right = nil
   end
 end
-
-my_bst = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9])
-my_bst.pretty_print
-my_bst.delete(7)
-my_bst.insert(0)
-my_bst.pretty_print
