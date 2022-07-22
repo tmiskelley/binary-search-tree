@@ -66,11 +66,9 @@ class Tree
     current_node = @root
 
     until current_node.data == data
-      if data > current_node.data
-        current_node = current_node.right
-      else
-        current_node = current_node.left
-      end
+      current_node =
+        data > current_node.data ? current_node.right : current_node.left
+      raise 'Node not found' if current_node.nil?
     end
     current_node
   end
