@@ -1,7 +1,44 @@
 # frozen_string_literal: true
 
+require './tree_traversal'
+
+# module container for removing child nodes via delete method
+module RemoveChildNode
+  def remove_leaf_node(previous_node, current_node)
+    if previous_node.left == current_node
+      previous_node.left = nil
+    else
+      previous_node.right = nil
+    end
+  end
+
+  # deletes a node from Tree that has only one child node
+  def remove_one_child(current_node)
+    if current_node.left.nil?
+      current_node.data = current_node.right.data
+      current_node.right = nil
+    else
+      current_node.data = current_node.left.data
+      current_node.left = nil
+    end
+  end
+
+  # deletes a node from Tree that has two children
+  def remove_two_child(current_node)
+    original_node = current_node
+    current_node = current_node.right
+    current_node = current_node.left until current_node.left.nil?
+
+    new_node = current_node.data
+    delete(current_node.data)
+    original_node.data = new_node
+  end
+end
+
 # takes an array and converts it into a binary search tree data structure
 class Tree
+  include RemoveChildNode
+  include TreeTraversal
   attr_accessor :root, :data
 
   def initialize(arr)
@@ -71,38 +108,6 @@ class Tree
       raise 'Node not found' if current_node.nil?
     end
     current_node
-  end
-
-  protected
-
-  def remove_leaf_node(previous_node, current_node)
-    if previous_node.left == current_node
-      previous_node.left = nil
-    else
-      previous_node.right = nil
-    end
-  end
-
-  # deletes a node from Tree that has only one child node
-  def remove_one_child(current_node)
-    if current_node.left.nil?
-      current_node.data = current_node.right.data
-      current_node.right = nil
-    else
-      current_node.data = current_node.left.data
-      current_node.left = nil
-    end
-  end
-
-  # deletes a node from Tree that has two children
-  def remove_two_child(current_node)
-    original_node = current_node
-    current_node = current_node.right
-    current_node = current_node.left until current_node.left.nil?
-
-    new_node = current_node.data
-    delete(current_node.data)
-    original_node.data = new_node
   end
 end
 
