@@ -121,7 +121,3 @@ class Tree
     current_node
   end
 end
-
-my_bst = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9])
-my_bst.pretty_print
-p my_bst.level_order(my_bst.root, [my_bst.root], [])
