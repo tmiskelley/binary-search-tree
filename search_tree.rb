@@ -35,6 +35,17 @@ module RemoveChildNode
   end
 end
 
+# binary tree node
+class Node
+  attr_accessor :left, :right, :data
+
+  def initialize(data)
+    @data = data
+    @left = nil
+    @right = nil
+  end
+end
+
 # takes an array and converts it into a binary search tree data structure
 class Tree
   include RemoveChildNode
@@ -111,13 +122,6 @@ class Tree
   end
 end
 
-# binary tree node
-class Node
-  attr_accessor :left, :right, :data
-
-  def initialize(data)
-    @data = data
-    @left = nil
-    @right = nil
-  end
-end
+my_bst = Tree.new([1, 2, 3, 4, 5, 6, 7, 8, 9])
+my_bst.pretty_print
+p my_bst.level_order(my_bst.root, [my_bst.root], [])
