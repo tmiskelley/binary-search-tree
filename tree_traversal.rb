@@ -3,7 +3,7 @@
 # module container for all tree traversal algorithims
 module TreeTraversal
   # Returns an array of nodes in level order
-  def level_order(current_node, queue, array)
+  def level_order(current_node, queue = [current_node], array = [])
     return if queue.empty?
 
     array.push(current_node.data)
@@ -13,6 +13,7 @@ module TreeTraversal
     end
     queue.shift
     level_order(queue[0], queue, array)
+    yield array if block_given?
     array
   end
 end
